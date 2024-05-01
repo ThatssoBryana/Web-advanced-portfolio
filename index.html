@@ -9,15 +9,16 @@
 </head>
 <body>
     <header>
-        <h1>Notitie Applicatie</h1>
+        <h1>Mijn notitie Applicatie</h1>
     </header>
+    <h2>Mijn Notities</h2>
     <main>
-        
-        <h2>Mijn Notities</h2>
-        <ul id="note-list">
-                    <!-- Notities worden hier dynamisch toegevoegd -->
-        </ul>
-         <form id="note-form">
+        <div id="note-list">
+            <div class="note-column" id="personal-list"></div>
+            <div class="note-column" id="work-list"></div>
+            <div class="note-column" id="ideas-list"></div>
+        </div>
+        <form id="note-form">
             <input type="text" id="note-title" placeholder="Titel" required>
             <textarea id="note-content" placeholder="Inhoud" required></textarea>
             <select id="note-category">
@@ -32,9 +33,8 @@
                 <button type="button" id="cancel-btn" style="display: none;">Annuleren</button>
             </div>
         </form>
-        
-        
-    </main>
+
+    </main>    
     <script src="script.js"></script>
 </body>
 </html>

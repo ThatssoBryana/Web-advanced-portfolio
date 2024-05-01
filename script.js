@@ -4,17 +4,21 @@ const NOTE_COLORS = {
     COMPLETED: '#cceeff'
 };
 
-// Lijst van notities
-let notes = [];
+// Object om lijsten van notities per categorie bij te houden
+let categoryNoteLists = {
+    Personal: [],
+    Work: [],
+    Ideas: []
+};
 
 // Referenties naar HTML-elementen
 const noteForm = document.getElementById('note-form');
 const noteTitleInput = document.getElementById('note-title');
 const noteContentInput = document.getElementById('note-content');
 const noteCategory = document.getElementById('note-category');
-const noteList = document.getElementById('note-list');
+const notesContainer = document.getElementById('note-list');
 
-// Functie om notities toe te voegen
+// Functie om notities toe te voegen aan de juiste lijst op basis van categorie
 const addNote = (title, content, category) => {
     const note = {
         id: Date.now(), // Unieke ID voor elke notitie
@@ -23,93 +27,104 @@ const addNote = (title, content, category) => {
         category,
         color: NOTE_COLORS.DEFAULT
     };
-    notes.push(note);
+    categoryNoteLists[category].push(note);
     renderNotes();
     saveNotesToLocalStorage();
-};
-
-// Functie om notities te bewerken
-const editNote = (id, title, content) => {
-    const index = notes.findIndex(note => note.id === id);
-    if (index !== -1) {
-        notes[index].title = title;
-        notes[index].content = content;
-        renderNotes();
-        saveNotesToLocalStorage();
-    }
 };
 
 // Functie om notities te verwijderen
-const deleteNote = id => {
-    notes = notes.filter(note => note.id !== id);
+const deleteNote = (id, category) => {
+    categoryNoteLists[category] = categoryNoteLists[category].filter(note => note.id !== id);
     renderNotes();
     saveNotesToLocalStorage();
 };
 
-// Functie om notities te markeren als voltooid
-const toggleNoteCompleted = id => {
-    const index = notes.findIndex(note => note.id === id);
-    if (index !== -1) {
-        notes[index].color = notes[index].color === NOTE_COLORS.DEFAULT ? NOTE_COLORS.COMPLETED : NOTE_COLORS.DEFAULT;
-        renderNotes();
-        saveNotesToLocalStorage();
-    }
+// Functie om een notitie te bewerken
+const editNote = (id, category) => {
+    // Zoek de notitie met de gegeven id in de juiste categorie
+    const noteToEdit = categoryNoteLists[category].find(note => note.id === id);
+
+
+     deleteNote(id, category);
+
+
+    noteTitleInput.value = noteToEdit.title;
+    noteContentInput.value = noteToEdit.content;
+    noteCategory.value = category;
+
+
+    document.getElementById('edit-btn').style.display = 'inline';
+    document.getElementById('cancel-btn').style.display = 'inline';
+    document.getElementById('submit-btn').style.display = 'none';
+
+    // Bewaar de id van de notitie die wordt bewerkt, zodat we deze kunnen gebruiken bij het bijwerken van de notitie
+    noteForm.dataset.editId = id;
 };
 
-// Functie om notities weer te geven op de pagina
+
+// Functie om notities weer te geven op de pagina met kolommen per categorie
 const renderNotes = () => {
-    noteList.innerHTML = '';
-    notes.forEach(note => {
-        const noteItem = document.createElement('li');
-        noteItem.style.backgroundColor = note.color;
-        noteItem.innerHTML = `
-            <h3>${note.title}</h3>
-            <p>${note.content}</p>
-            <p><strong>Categorie:</strong> ${note.category}</p>
-            <button onclick="toggleNoteCompleted(${note.id})">Markeren als voltooid</button>
-            <button onclick="editNoteForm(${note.id})">Bewerken</button>
-            <button onclick="deleteNote(${note.id})">Verwijderen</button>
-        `;
-        noteList.appendChild(noteItem);
-    });
-};
+    const noteListContainer = document.getElementById('note-list');
+    noteListContainer.innerHTML = ''; 
 
-// Functie om formulier voor het bewerken van notitie voor te bereiden
-const editNoteForm = id => {
-    const note = notes.find(note => note.id === id);
-    if (note) {
-        noteTitleInput.value = note.title;
-        noteContentInput.value = note.content;
-        // Verberg toevoegen-knop, toon bewerken-knop en annuleren-knop
-        document.getElementById('edit-btn').style.display = 'inline';
-        document.getElementById('cancel-btn').style.display = 'inline';
-        document.getElementById('edit-btn').onclick = () => {
-            editNote(id, noteTitleInput.value, noteContentInput.value);
-            resetNoteForm();
-        };
-        document.getElementById('cancel-btn').onclick = resetNoteForm;
+
+    // Maak een object om notitielijsten per categorie bij te houden
+    const categoryColumns = {};
+
+    // Creëer een kolom voor elke categorie
+    for (const category in categoryNoteLists) {
+        categoryColumns[category] = document.createElement('div');
+        categoryColumns[category].classList.add('note-column');
+        categoryColumns[category].innerHTML = `<h3>${category} notes</h2>`;
+    }
+
+    // Voeg alle kolommen toe aan de container
+    for (const category in categoryColumns) {
+        noteListContainer.appendChild(categoryColumns[category]);
+    }
+
+    // Plaats notities in de juiste kolom op basis van de categorie
+    for (const category in categoryNoteLists) {
+        const categoryList = categoryNoteLists[category];
+        categoryList.forEach(note => {
+            const noteItem = document.createElement('div');
+            noteItem.classList.add('note-item');
+            noteItem.innerHTML = `
+                <h3>${note.title}</h3>
+                <p>${note.content}</p>
+                <button class="delete-btn" onclick="deleteNote(${note.id}, '${category}')">Verwijderen</button>
+                <button class="edit-btn" onclick="editNote(${note.id}, '${category}')">Bewerken</button>
+            `;
+            categoryColumns[category].appendChild(noteItem);
+        });
+    }
+    // Wis alle huidige inhoud van de notities-container
+    notesContainer.innerHTML = '';
+
+    // Voeg alle kolommen toe aan de notities-container
+    for (const category in categoryColumns) {
+        notesContainer.appendChild(categoryColumns[category]);
     }
 };
 
-// Functie om formulier voor het toevoegen van notities te resetten
+//de invoervelden van het formulier leeg te maken
 const resetNoteForm = () => {
     noteTitleInput.value = '';
     noteContentInput.value = '';
-    // Toon toevoegen-knop, verberg bewerken-knop en annuleren-knop
-    document.getElementById('edit-btn').style.display = 'none';
-    document.getElementById('cancel-btn').style.display = 'none';
+    noteCategory.selectedIndex = 0; 
 };
+
 
 // Functie om notities naar LocalStorage op te slaan
 const saveNotesToLocalStorage = () => {
-    localStorage.setItem('notes', JSON.stringify(notes));
+    localStorage.setItem('categoryNoteLists', JSON.stringify(categoryNoteLists));
 };
 
 // Functie om notities van LocalStorage te laden
 const loadNotesFromLocalStorage = () => {
-    const storedNotes = localStorage.getItem('notes');
-    if (storedNotes) {
-        notes = JSON.parse(storedNotes);
+    const storedCategoryNoteLists = localStorage.getItem('categoryNoteLists');
+    if (storedCategoryNoteLists) {
+        categoryNoteLists = JSON.parse(storedCategoryNoteLists);
         renderNotes();
     }
 };
@@ -122,6 +137,9 @@ const loadNotesFromLocalStorage = () => {
         const title = noteTitleInput.value.trim();
         const content = noteContentInput.value.trim();
         const category = noteCategory.value;
+        console.log("Title:", title);
+        console.log("Content:", content);
+        console.log("Category:", category);
         if (title && content) {
             addNote(title, content, category);
             resetNoteForm();
