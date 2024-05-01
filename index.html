@@ -20,6 +20,12 @@
          <form id="note-form">
             <input type="text" id="note-title" placeholder="Titel" required>
             <textarea id="note-content" placeholder="Inhoud" required></textarea>
+            <select id="note-category">
+                <option value="" disabled selected hidden>Selecteer categorie</option>
+                <option value="Personal">Persoonlijk</option>
+                <option value="Work">Werk</option>
+                <option value="Ideas">Ideëen</option>
+            </select>
             <div>
                 <button type="submit">Toevoegen</button>
                 <button type="button" id="edit-btn" style="display: none;">Bewerken</button>

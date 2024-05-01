@@ -11,14 +11,16 @@ let notes = [];
 const noteForm = document.getElementById('note-form');
 const noteTitleInput = document.getElementById('note-title');
 const noteContentInput = document.getElementById('note-content');
+const noteCategory = document.getElementById('note-category');
 const noteList = document.getElementById('note-list');
 
 // Functie om notities toe te voegen
-const addNote = (title, content) => {
+const addNote = (title, content, category) => {
     const note = {
         id: Date.now(), // Unieke ID voor elke notitie
         title,
         content,
+        category,
         color: NOTE_COLORS.DEFAULT
     };
     notes.push(note);
@@ -63,6 +65,7 @@ const renderNotes = () => {
         noteItem.innerHTML = `
             <h3>${note.title}</h3>
             <p>${note.content}</p>
+            <p><strong>Categorie:</strong> ${note.category}</p>
             <button onclick="toggleNoteCompleted(${note.id})">Markeren als voltooid</button>
             <button onclick="editNoteForm(${note.id})">Bewerken</button>
             <button onclick="deleteNote(${note.id})">Verwijderen</button>
@@ -118,8 +121,9 @@ const loadNotesFromLocalStorage = () => {
         event.preventDefault();
         const title = noteTitleInput.value.trim();
         const content = noteContentInput.value.trim();
+        const category = noteCategory.value;
         if (title && content) {
-            addNote(title, content);
+            addNote(title, content, category);
             resetNoteForm();
         } else {
             alert('Vul alstublieft zowel de titel als de inhoud in voor de notitie.');
