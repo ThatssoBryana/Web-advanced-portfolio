@@ -1,0 +1,53 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#note-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#note-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#note-form {
+    margin-top: 20px;
+}
+
+#note-form input,
+#note-form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#note-form div {
+    text-align: right;
+}
+
+#note-form button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Notitie Applicatie</h1>
+    </header>
+    <main>
+        
+        <h2>Mijn Notities</h2>
+        <ul id="note-list">
+                    <!-- Notities worden hier dynamisch toegevoegd -->
+        </ul>
+         <form id="note-form">
+            <input type="text" id="note-title" placeholder="Titel" required>
+            <textarea id="note-content" placeholder="Inhoud" required></textarea>
+            <div>
+                <button type="submit">Toevoegen</button>
+                <button type="button" id="edit-btn" style="display: none;">Bewerken</button>
+                <button type="button" id="cancel-btn" style="display: none;">Annuleren</button>
+            </div>
+        </form>
+        
+        
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
