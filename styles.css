@@ -1,4 +1,4 @@
-/* styles.css */
+/* Algemene stye */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -19,63 +19,128 @@ main {
     display: flex;
     justify-content: space-around;
 }
-h2{
-    margin-top: 1rem; /* Marge bovenaan toevoegen */
-    margin-left: 20rem; /* Marge aan de linkerkant toevoegen */
+
+h2 {
+    margin-top: 1rem; 
+    margin-left: 10rem;
+    color:#0000cd;
 }
 
-
-
-
-#note-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0;
-}
-
+/* notities style */
 .note-item {
     background-color: #f9f9f9;
     border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 15px 20px; 
+    margin-bottom: 20px;
+    border-radius: 10px; 
 }
 
-#note-list li {
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
+.note-item h3 {
+    margin-top: 0;
 }
+
+.note-item p {
+    margin-bottom: 0;
+}
+
+
+.editing {
+    background-color: #888; 
+    color: #fff; 
+}
+
+
+/* Buttons style */
+.delete-btn,
+.edit-btn,
+.save-btn,
+.cancel-btn {
+    padding: 8px 15px; 
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px; 
+}
+
+.delete-btn {
+    background-color: #ffcccc; 
+    color: #f00; 
+}
+
+.edit-btn,
+.save-btn,
+.cancel-btn {
+    background-color: #333; 
+    color: #fff; 
+    margin-left: 5px; 
+}
+
 
 #note-form {
     margin-top: 20px;
-    padding: 20px; 
-    background-color: #f9f9f9; 
-    border: 1px solid #ccc; 
-    border-radius: 5px;
-    
+    padding: 20px;
+    background-color: #add8e6; 
+    border: 2px solid #0000cd; 
+    border-radius: 10px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%; 
+    height: 50%;
+    margin: 0 auto; 
 }
 
 #note-form input,
 #note-form textarea {
-    width: calc(100% - 20px); 
+    width: calc(100% - 40px); 
     margin-bottom: 10px;
-    padding: 5px;
-    border: 1px solid #ccc; 
-    border-radius: 3px; 
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box; 
 }
 
 #note-form div {
-    text-align: right;
+    text-align: center;
 }
 
 #note-form button {
-    padding: 5px 10px;
-    margin-left: 5px;
+    padding: 8px 15px;
     cursor: pointer;
-    background-color: #333; 
-    color: #fff; 
-    border: none; 
-    border-radius: 3px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
 }
 
+
+#note-list {
+    display: flex; 
+    justify-content: space-around;
+}
+
+.note-column {
+    flex: 1; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    padding: 10px; 
+    margin: 0 10px; 
+}
+
+/* CSS-animatie voor pulse effect */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse {
+    animation: pulse 1s ease infinite;
+}
