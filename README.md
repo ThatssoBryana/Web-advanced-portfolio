@@ -54,7 +54,7 @@ Dit is een eenvoudige notitie-applicatie waarin gebruikers notities kunnen toevo
     - Manipuleert JSON-gegevens, bijvoorbeeld bij het opslaan en laden van notities vanuit LocalStorage.
 
 16. **Basis CSS Animatie**
-    - Voegt eenvoudige CSS-animaties toe, bijvoorbeeld bij het toevoegen of verwijderen van notities.
+    - Voegt eenvoudige CSS-animaties toe, nieuwe notities hebben een pulse waneer ze in de lijst worden toegevoegd.
 
 17. **Gebruik van een flexbox of CSS grid**
     - Gebruikt Flexbox of Grid om de lay-out van de notitieslijst te beheren.
