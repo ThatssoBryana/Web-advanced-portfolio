@@ -73,4 +73,8 @@ Dit is een eenvoudige notitie-applicatie waarin gebruikers notities kunnen toevo
 3. Bewerk notities door op "Bewerken" te klikken, voer de gewenste wijzigingen door en klik opnieuw op "Bewerken" om de wijzigingen op te slaan.
 4. Verwijder notities door op "Verwijderen" te klikken.
 5. Markeer notities als voltooid door op "Markeren als voltooid" te klikken.
+   
+## Gebruikte bronnen
+https://www.youtube.com/watch?v=SDJUbYU3Pzc
+Canvascursus
 
